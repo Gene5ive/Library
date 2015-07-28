@@ -1,5 +1,11 @@
 (function ($) {
 
+  var books = [{title:"JS The Good Parts", author:"John Doe", releaseDate:"2012", keywords:"JavaScript Programming"},
+               {title:"CS The better parts", author:"John Doe", releaseDate:"2012", keywords:"CoffeeScript Programming"},
+               {title:"Scala for The Impatient", author:"John Doe", releaseDate:"2012", keywords:"Scala Programming"},
+               {title:"American Psycho", author:"Bret Easton Ellis", releaseDate:"2012", keywords:"Novel Splatter"},
+               {title:"Eloquent JavaScript", author:"John Doe", releaseDate:"2012", keywords:"JavaScript Programming"}]
+
   var Book = Backbone.Model.extend({
     defaults: {
       coverImage: "img/placeholder.png",
@@ -21,17 +27,6 @@
       this.$el.html(tmpl(this.model.toJSON())); //this.el what we defined in tagName. use $el to get access to jQuery html() function
       return this;
     }
-  });
-
-  var book = new Book({
-    title: "Some title",
-    author: "John Doe",
-    releaseDate: "2012",
-    keywords: "JavaScript Programming"
-  });
-
-  bookView = new BookView({
-    model: book
   });
 
   var Library = Backbone.Collection.extend({
@@ -62,6 +57,6 @@
 
   });
 
-  $("#books").html(bookView.render().el);
+  var libraryView = new LibraryView();
 
 })(jQuery);
