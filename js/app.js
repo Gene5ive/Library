@@ -57,7 +57,7 @@
       this.collection.fetch();
       this.render();
 
-      this.collection.create(formData);
+      this.collection.on("add", this.addBook, this);
       this.collection.on("remove", this.removeBook, this);
       this.collection.on("reset", this.render, this);
     },
@@ -76,13 +76,25 @@
 
       $("#addBook div").children("input").each(function(i, el) {
         if ($(el).val() !== "") {
-          formData[el.id] = $(el).val();
+          if (el.id === 'keywords') {
+              var keywordArray = $(el).val().split(',');
+              var keywordObjects = [];
+              for (var j = 0; j < keywordArray.length; j++) {
+                keywordObjects[j] = { "keyword": keywordArray[j] };
+              }
+              formData[el.id] = keywordObjects;
+          } else if (el.id === 'releaseDate') {
+            formData[el.id] = $('#releaseDate').datepicker("getDate").getTime();
+          } else {
+            formData[el.id] = $(el).val();
+          }
         }
       });
 
       books.push(formData);
 
-      this.collection.add(new Book(formData));
+      //this.collection.add(new Book(formData));
+      this.collection.create(formData);
     },
 
     events: {
