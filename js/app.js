@@ -1,10 +1,11 @@
 (function($) {
+  $("#releaseDate").datepicker();
 
   var books = [{title:"JS The Good Parts", author:"John Doe", releaseDate:"2012", keywords:"JavaScript Programming"},
                {title:"CS The better parts", author:"John Doe", releaseDate:"2012", keywords:"CoffeeScript Programming"},
                {title:"Scala for The Impatient", author:"John Doe", releaseDate:"2012", keywords:"Scala Programming"},
                {title:"American Psycho", author:"Bret Easton Ellis", releaseDate:"2012", keywords:"Novel Splatter"},
-               {title:"Eloquent JavaScript", author:"John Doe", releaseDate:"2012", keywords:"JavaScript Programming"}]
+               {title:"Eloquent JavaScript", author:"John Doe", releaseDate:"2012", keywords:"JavaScript Programming"}];
 
   var Book = Backbone.Model.extend({
     defaults: {
@@ -13,7 +14,8 @@
       author: "author not entered.",
       releaseDate: "relase date not entered.",
       keywords: "none."
-    }
+    },
+    idAttribute: "_id"
   });
 
   var BookView = Backbone.View.extend({
@@ -55,7 +57,7 @@
       this.collection.fetch();
       this.render();
 
-      this.collection.on("add", this.renderBook, this);
+      this.collection.create(formData);
       this.collection.on("remove", this.removeBook, this);
       this.collection.on("reset", this.render, this);
     },
